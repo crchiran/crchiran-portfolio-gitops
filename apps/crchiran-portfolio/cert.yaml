@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: crchiran-hudai-xyz
+  namespace: istio-system
+spec:
+  secretName: crchiran-hudai-xyz-tls
+  issuerRef:
+    name: portpolio-clusterissuer
+    kind: ClusterIssuer
+  commonName: crchiran.hudai.xyz
+  dnsNames:
+    - crchiran.hudai.xyz

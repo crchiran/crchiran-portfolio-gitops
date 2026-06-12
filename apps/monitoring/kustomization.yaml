@@ -1,0 +1,16 @@
+# clusters/production/base/monitoring/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- namespace.yaml
+- loki-repo.yaml
+- monitoring-repo.yaml
+- loki-helmrelease.yaml
+- promtail-helmrelease.yaml
+- kube-prom-stack-helmrelease.yaml
+- monitoring-gateway.yaml
+# - grafana-virtualservice.yaml
+- grafana-admin-secret.yaml
+- loki-memberlist-svc.yaml
+
+# - monitoring-certificate.yaml # Comment out temporarily

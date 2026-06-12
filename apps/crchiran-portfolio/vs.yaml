@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: crchiran-portfolio
+  namespace: portfolio
+spec:
+  hosts:
+    - crchiran.hudai.xyz
+  gateways:
+    - istio-system/crchiran-portfolio-gateway
+  http:
+    - name: crchiran-portfolio-route
+      match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: crchiran-portfolio.portfolio.svc.cluster.local
+            port:
+              number: 80
+          weight: 100
+      timeout: 30s

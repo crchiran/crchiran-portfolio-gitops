@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: todo-vs
+  namespace: portfolio
+spec:
+  hosts:
+    - todo.hudai.xyz
+  gateways:
+    - istio-system/todo-gateway
+  http:
+    - name: crchiran-portfolio-route
+      match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: todo-app-svc.todo-app.svc.cluster.local
+            port:
+              number: 80
+          weight: 100
+      timeout: 30s

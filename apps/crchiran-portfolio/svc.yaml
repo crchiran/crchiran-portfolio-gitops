@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: crchiran-portfolio
+  labels:
+    app: crchiran-portfolio
+    component: web
+spec:
+  type: ClusterIP
+  selector:
+    app: crchiran-portfolio
+    component: web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP

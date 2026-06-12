@@ -1,0 +1,45 @@
+# # apps/monitoring/monitoring-gateway.yaml
+# apiVersion: networking.istio.io/v1
+# kind: Gateway
+# metadata:
+#   name: monitoring-gateway
+#   namespace: istio-system
+# spec:
+#   selector:
+#     istio: system-istio-ingressgateway
+#   servers:
+#   - port:
+#       number: 80
+#       name: http-monitoring
+#       protocol: HTTP
+#     hosts:
+#     - "app-monitor.local"
+#     # Redirect HTTP to HTTPS
+#     tls:
+#       httpsRedirect: true
+#   - port:
+#       number: 443
+#       name: https-monitoring
+#       protocol: HTTPS
+#     tls:
+#       mode: SIMPLE
+#       credentialName: monitoring-tls
+#     hosts:
+#     - "app-monitor.local"
+#
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: monitoring-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "app-monitor.local"
+  # Remove HTTPS section temporarily
