@@ -14,4 +14,4 @@ resources:
 images:
 - name: crchiran-portfolio
   newName: ghcr.io/crchiran/crchiran-portfolio
-  newTag: prod-8cdb386-20260612-1900-5
+  newTag: prod-bebfc33-20260618-1953-8
