@@ -55,17 +55,16 @@ spec:
 
       persistence:
         enabled: true
-        storageClassName: linode-block-storage-retain
+        type: pvc
+        accessModes:
+          - ReadWriteOnce
         size: 2Gi
 
-      # Basic hardening
       grafana.ini:
         security:
           allow_embedding: false
-          # cookie_secure: true # Grafana behind HTTPS (Ingress / Istio with TLS)
-          # cookie_samesite: strict
-        cookie_secure: false # 👈 IMPORTANT: false while you're on HTTP
-        cookie_samesite: lax # 👈 more forgiving; 'strict' can be annoying
+          cookie_secure: false
+          cookie_samesite: lax
         auth.anonymous:
           enabled: false
         users:
