@@ -38,7 +38,6 @@ spec:
           volumeClaimTemplate:
             spec:
               accessModes: [ "ReadWriteOnce" ]
-              storageClassName: linode-block-storage-retain
               resources:
                 requests:
                   storage: 2Gi
