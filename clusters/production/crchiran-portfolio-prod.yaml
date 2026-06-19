@@ -17,6 +17,8 @@ metadata:
   name: crchiran-portfolio-prod
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: namespace-portfolio
   interval: 1m
   path: ./apps/crchiran-portfolio
   prune: true
