@@ -9,8 +9,6 @@ resources:
 - promtail-helmrelease.yaml
 - kube-prom-stack-helmrelease.yaml
 - monitoring-gateway.yaml
-# - grafana-virtualservice.yaml
+- grafana-virtualservice.yaml
 - grafana-admin-secret.yaml
-- loki-memberlist-svc.yaml
-
-# - monitoring-certificate.yaml # Comment out temporarily
+- monitoring-certificate.yaml # Comment out temporarily
