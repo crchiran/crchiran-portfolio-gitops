@@ -1,14 +1,112 @@
-## CI/CD Deployment Flow Demonstration
+# Portfolio Platform - Kubernetes GitOps Repository
 
-This repository demonstrates a complete GitOps-based deployment workflow using:
+![Kubernetes](https://img.shields.io/badge/Kubernetes-GitOps-blue)
+![FluxCD](https://img.shields.io/badge/FluxCD-Continuous%20Delivery-blue)
+![Istio](https://img.shields.io/badge/Istio-Service%20Mesh-green)
+![Prometheus](https://img.shields.io/badge/Prometheus-Monitoring-orange)
+![Grafana](https://img.shields.io/badge/Grafana-Dashboards-orange)
+![Loki](https://img.shields.io/badge/Loki-Logging-yellow)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-black)
 
-* GitHub Actions
-* GitHub Container Registry (GHCR)
-* FluxCD
-* Kubernetes
-* GitOps Repository
+A production-inspired Kubernetes GitOps platform demonstrating automated application delivery using FluxCD, Istio, cert-manager, Prometheus, Grafana, Loki, and GitHub Actions.
 
-### Deployment Architecture
+This repository acts as the **single source of truth** for Kubernetes deployments and platform configuration. Every change is managed through Git and automatically synchronized into the cluster by FluxCD.
+
+---
+
+## Project Summary
+
+| Component         | Purpose                       |
+| ----------------- | ----------------------------- |
+| Portfolio Website | Static application deployment |
+| Todo Application  | Example workload              |
+| FluxCD            | GitOps continuous delivery    |
+| Istio             | Traffic management & ingress  |
+| cert-manager      | TLS certificate automation    |
+| Prometheus        | Metrics collection            |
+| Grafana           | Dashboard visualization       |
+| Loki              | Centralized logging           |
+| GitHub Actions    | CI/CD automation              |
+| GHCR              | Container registry            |
+
+---
+
+## Why GitOps?
+
+GitOps uses Git as the single source of truth for Kubernetes deployments.
+
+Benefits:
+
+* Version-controlled infrastructure
+* Auditable deployment history
+* Automated synchronization
+* Faster recovery and rollback
+* Consistent environments
+* Reduced operational risk
+* Improved deployment reliability
+* Fully declarative platform management
+
+---
+
+## Platform Features
+
+* GitOps-driven deployments
+* Automated CI/CD pipelines
+* Automated container image publishing
+* Automated Kubernetes synchronization
+* Container vulnerability scanning
+* TLS certificate automation
+* Service mesh ingress management
+* Centralized logging
+* Metrics and dashboards
+* Declarative infrastructure management
+* Disaster recovery through Git
+
+---
+
+## Repository Relationships
+
+This project uses two repositories.
+
+### Application Repository
+
+Repository:
+
+```text
+https://github.com/crchiran/crchiran-portfolio
+```
+
+Responsibilities:
+
+* Application source code
+* Docker image creation
+* GitHub Actions CI/CD
+* Trivy security scanning
+* Publishing images to GHCR
+* Updating GitOps manifests
+
+---
+
+### GitOps Repository (Current Repository)
+
+Repository:
+
+```text
+https://github.com/crchiran/crchiran-portfolio-gitops
+```
+
+Responsibilities:
+
+* Kubernetes manifests
+* FluxCD resources
+* Istio resources
+* TLS certificates
+* Monitoring stack
+* Deployment automation
+
+---
+
+## What Happens When Code Is Pushed?
 
 ```text
 Developer
@@ -18,38 +116,205 @@ Developer
 Application Repository
 (crchiran-portfolio)
     │
-    │ GitHub Actions
     ▼
-Build Docker Image
+GitHub Actions
     │
-    ▼
-Push Image to GHCR
-    │
-    ▼
-Update GitOps Repository
+    ├── Build Docker Image
+    ├── Trivy Security Scan
+    ├── Push Image to GHCR
+    └── Update GitOps Repository
+                │
+                ▼
+GitOps Repository
 (crchiran-portfolio-gitops)
-    │
-    ▼
-FluxCD Detects Changes
-    │
-    ▼
+                │
+                ▼
+FluxCD
+                │
+                ▼
 Kubernetes Cluster
-    │
-    ▼
+                │
+                ▼
 Deploy New Application Version
 ```
+
 ---
 
-## FluxCD Deployment
+## Platform Architecture
 
-### 1. Prerequisites
+```text
+Internet
+    │
+    ▼
+Istio Ingress Gateway
+    │
+    ├── Portfolio Website
+    └── Todo Application
+
+Monitoring Stack
+    ├── Prometheus
+    ├── Grafana
+    ├── Loki
+    └── Promtail
+
+FluxCD
+    ├── Source Controller
+    ├── Kustomize Controller
+    ├── Helm Controller
+    └── Notification Controller
+
+cert-manager
+    └── TLS Certificate Automation
+```
+
+---
+
+## Repository Structure
+
+```text
+.
+├── README.md
+├── apps
+│   ├── crchiran-portfolio
+│   │   ├── cert.yaml
+│   │   ├── deployment.yaml
+│   │   ├── gw.yaml
+│   │   ├── kustomization.yaml
+│   │   ├── sa.yaml
+│   │   ├── svc.yaml
+│   │   └── vs.yaml
+│   │
+│   ├── monitoring
+│   │   ├── grafana-admin-secret.yaml
+│   │   ├── grafana-virtualservice.yaml
+│   │   ├── kube-prom-stack-helmrelease.yaml
+│   │   ├── kustomization.yaml
+│   │   ├── loki-helmrelease.yaml
+│   │   ├── loki-memberlist-svc.yaml
+│   │   ├── loki-repo.yaml
+│   │   ├── monitoring-gateway.yaml
+│   │   ├── monitoring-repo.yaml
+│   │   ├── namespace.yaml
+│   │   └── promtail-helmrelease.yaml
+│   │
+│   └── todo
+│       ├── cert.yaml
+│       ├── gw.yaml
+│       ├── kustomization.yaml
+│       ├── ns.yaml
+│       ├── svc.yaml
+│       ├── todo-deployment.yaml
+│       └── vs.yaml
+│
+└── clusters
+    └── production
+        ├── crchiran-portfolio-prod.yaml
+        ├── monitoring.yaml
+        ├── todo.yaml
+        └── kustomization.yaml
+```
+
+---
+
+## Managed Applications
+
+### Portfolio Website
+
+Location:
+
+```text
+apps/crchiran-portfolio
+```
+
+Resources:
+
+* Deployment
+* Service
+* Istio Gateway
+* VirtualService
+* TLS Certificate
+* ServiceAccount
+
+---
+
+### Todo Application
+
+Location:
+
+```text
+apps/todo
+```
+
+Resources:
+
+* Deployment
+* Service
+* Istio Gateway
+* VirtualService
+* TLS Certificate
+
+---
+
+### Monitoring Stack
+
+Location:
+
+```text
+apps/monitoring
+```
+
+Components:
+
+* Prometheus
+* Grafana
+* Loki
+* Promtail
+
+Provides:
+
+* Metrics collection
+* Dashboard visualization
+* Centralized logging
+* Kubernetes observability
+
+---
+
+## Production Environment
+
+Location:
+
+```text
+clusters/production
+```
+
+Contains:
+
+```text
+crchiran-portfolio-prod.yaml
+monitoring.yaml
+todo.yaml
+kustomization.yaml
+```
+
+Responsibilities:
+
+* Environment composition
+* Application orchestration
+* Deployment ordering
+* FluxCD synchronization
+
+---
+
+## Getting Started
+
+### Prerequisites
 
 Install and configure:
 
-* Kubernetes cluster
-* `kubectl`
+* Kubernetes Cluster
+* kubectl
 * Flux CLI
-* GitHub account
+* GitHub Account
 * GitHub Personal Access Token
 
 Verify cluster access:
@@ -67,158 +332,84 @@ flux check --pre
 
 ---
 
-## 2. Install Flux CLI
+## Bootstrap FluxCD
 
-### macOS
-
-```bash
-brew install fluxcd/tap/flux
-```
-
-### Linux
+### Export Variables
 
 ```bash
-curl -s https://fluxcd.io/install.sh | sudo bash
+export GITHUB_TOKEN="<github-personal-access-token>"
+export GITHUB_USER="<github-username>"
+export GITOPS_REPO="<gitops-repository-name>"
 ```
 
----
-
-## 3. Create GHCR Image Pull Secret
-
-Create namespace first:
-
-```bash
-kubectl create namespace portfolio --dry-run=client -o yaml | kubectl apply -f -
-```
-
-Create GHCR pull secret:
-
-```bash
-kubectl create secret docker-registry ghcr-secret \
-  --namespace portfolio \
-  --docker-server=ghcr.io \
-  --docker-username=<github-username> \
-  --docker-password='<github-token-or-ghcr-token>' \
-  --docker-email='<github-email>'
-```
-
-Verify secret:
-
-```bash
-kubectl get secret ghcr-secret -n portfolio
-```
-
-> Never commit real tokens, passwords, or secrets into Git.
-
----
-
-## 4. Export GitHub Token
-
-```bash
-export GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
-export GITHUB_USER="YOUR_GITHUB_USERNAME"
-export GTIOPS_REPO="YOUR_GITOPS_REPO"
-```
-
-Verify token exists:
+Verify:
 
 ```bash
 echo $GITHUB_TOKEN
 echo $GITHUB_USER
-echo $GTIOPS_REPO
+echo $GITOPS_REPO
 ```
 
 ---
 
-## 5. Bootstrap FluxCD
+### Bootstrap Kubernetes Cluster
 
 ```bash
 flux bootstrap github \
   --owner=$GITHUB_USER \
-  --repository=$GTIOPS_REPO\
+  --repository=$GITOPS_REPO \
   --branch=main \
-  --path=clusters//production \
-  --personal=true
+  --path=clusters/production \
+  --personal=true \
+  --token-auth
 ```
 
-This command installs FluxCD controllers and connects the Kubernetes cluster with the GitHub GitOps repository.
+FluxCD will automatically:
+
+* Install FluxCD controllers
+* Create the `flux-system` namespace
+* Configure Git synchronization
+* Create GitRepository resources
+* Create Kustomization resources
+* Start continuous reconciliation
 
 ---
 
-## 6. Repository Structure
+## Verification
 
-```text
-.
-├── apps
-│   ├── crchiran-portfolio
-│   │   ├── cert.yaml
-│   │   ├── deployment.yaml
-│   │   ├── gw.yaml
-│   │   ├── kustomization.yaml
-│   │   ├── sa.yaml
-│   │   ├── svc.yaml
-│   │   └── vs.yaml
-│   ├── monitoring
-│   │   ├── grafana-admin-secret.yaml
-│   │   ├── grafana-virtualservice.yaml
-│   │   ├── kube-prom-stack-helmrelease.yaml
-│   │   ├── kustomization.yaml
-│   │   ├── loki-helmrelease.yaml
-│   │   ├── loki-memberlist-svc.yaml
-│   │   ├── loki-repo.yaml
-│   │   ├── monitoring-gateway.yaml
-│   │   ├── monitoring-repo.yaml
-│   │   ├── namespace.yaml
-│   │   └── promtail-helmrelease.yaml
-│   └── todo
-│       ├── cert.yaml
-│       ├── gw.yaml
-│       ├── kustomization.yaml
-│       ├── ns.yaml
-│       ├── svc.yaml
-│       ├── todo-deployment.yaml
-│       └── vs.yaml
-├── clusters
-│   └── production
-│       ├── crchiran-portfolio-prod.yaml
-│       ├── flux-system
-│       │   ├── gotk-components.yaml
-│       │   ├── gotk-sync.yaml
-│       │   └── kustomization.yaml
-│       ├── monitoring.yaml
-│       └── todo.yaml
-└── README.md
-```
-
----
-
-## 7. Verify FluxCD Installation
-
-Check Flux controllers:
+### Verify FluxCD Controllers
 
 ```bash
 kubectl get pods -n flux-system
 ```
 
-Check Flux health:
+---
+
+### Verify Flux Health
 
 ```bash
 flux check
 ```
 
-Check all Flux resources:
+---
+
+### View Flux Resources
 
 ```bash
 flux get all -A
 ```
 
-Check Git source:
+---
+
+### Verify Git Sources
 
 ```bash
 flux get sources git -A
 ```
 
-Check Kustomizations:
+---
+
+### Verify Kustomizations
 
 ```bash
 flux get kustomizations -A
@@ -226,158 +417,43 @@ flux get kustomizations -A
 
 ---
 
-## 8. Reconcile Manually
-
-Reconcile Git source:
-
-```bash
-flux reconcile source git flux-system
-```
-
-Reconcile root Kustomization:
-
-```bash
-flux reconcile kustomization flux-system
-```
-
----
-
-## 9. Verify Application Deployment
-
-Check all namespaces:
-
-```bash
-kubectl get ns
-```
-
-Check all pods:
-
-```bash
-kubectl get pods -A
-```
-
-Check services:
-
-```bash
-kubectl get svc -A
-```
-
-Check deployments:
+### Verify Workloads
 
 ```bash
 kubectl get deploy -A
-```
-
-Check Istio gateways:
-
-```bash
-kubectl get gateway -A
-```
-
-Check Istio VirtualServices:
-
-```bash
-kubectl get virtualservice -A
-```
-
-Check certificates:
-
-```bash
-kubectl get certificate -A
+kubectl get pods -A
+kubectl get svc -A
 ```
 
 ---
 
-## 10. Verify Portfolio Application
+## Manual Reconciliation
 
-```bash
-kubectl get pods -n portfolio
-kubectl get svc -n portfolio
-kubectl get gateway -n portfolio
-kubectl get virtualservice -n portfolio
-kubectl get certificate -n portfolio
-```
-
-Describe failed pod if needed:
-
-```bash
-kubectl describe pod -n portfolio <pod-name>
-```
-
-Check logs:
-
-```bash
-kubectl logs -n portfolio <pod-name>
-```
-
----
-
-## 11. Verify Todo Application
-
-```bash
-kubectl get pods -n todo
-kubectl get svc -n todo
-kubectl get gateway -n todo
-kubectl get virtualservice -n todo
-kubectl get certificate -n todo
-```
-
----
-
-## 12. Verify Monitoring Stack
-
-```bash
-kubectl get pods -n monitoring
-kubectl get helmrelease -n monitoring
-kubectl get helmrepository -n monitoring
-kubectl get svc -n monitoring
-```
-
-Check HelmRelease status:
-
-```bash
-flux get helmreleases -A
-```
-
-Reconcile monitoring manually:
-
-```bash
-flux reconcile kustomization monitoring -n flux-system
-```
-
----
-
-## 13. Update and Deploy Changes
-
-Edit Kubernetes YAML files, then commit and push:
-
-```bash
-git status
-git add .
-git commit -m "Update Kubernetes manifests"
-git push origin main
-```
-
-FluxCD automatically detects and applies the changes.
-
-Force sync manually:
+Force Git synchronization:
 
 ```bash
 flux reconcile source git flux-system
+```
+
+Force Kustomization reconciliation:
+
+```bash
 flux reconcile kustomization flux-system
 ```
 
 ---
 
-## 14. Troubleshooting
+## Troubleshooting
 
-Check Flux events:
+### View Flux Events
 
 ```bash
 flux events
 ```
 
-Check Flux logs:
+---
+
+### View Controller Logs
 
 ```bash
 kubectl logs -n flux-system deployment/source-controller
@@ -386,100 +462,123 @@ kubectl logs -n flux-system deployment/helm-controller
 kubectl logs -n flux-system deployment/notification-controller
 ```
 
-Check failed Kustomization:
+---
+
+### Verify Git Sources
+
+```bash
+flux get sources git -A
+```
+
+---
+
+### Verify Kustomizations
 
 ```bash
 flux get kustomizations -A
 ```
 
-Describe Kustomization:
+---
+
+### Describe Failed Resource
 
 ```bash
 kubectl describe kustomization <name> -n flux-system
 ```
 
-Check image pull issue:
-
-```bash
-kubectl describe pod -n portfolio <pod-name>
-kubectl get secret ghcr-secret -n portfolio
-```
-
-Common image pull error:
-
-```text
-ImagePullBackOff
-ErrImagePull
-unauthorized
-```
-
-Fix by recreating GHCR secret:
-
-```bash
-kubectl delete secret ghcr-secret -n portfolio
-
-kubectl create secret docker-registry ghcr-secret \
-  --namespace portfolio \
-  --docker-server=ghcr.io \
-  --docker-username=<github-username> \
-  --docker-password='<github-token-or-ghcr-token>' \
-  --docker-email='<github-email>'
-```
-
 ---
 
-## 15. Important Notes
+## Disaster Recovery
 
-Do not manually deploy application manifests with:
-
-```bash
-kubectl apply -f apps/
-```
-
-FluxCD should control the deployment lifecycle.
-
-Correct workflow:
+One of the primary benefits of GitOps is rapid cluster recovery.
 
 ```text
-Edit YAML → Commit → Push → FluxCD Sync → Kubernetes Deploy
+Git Repository
+      │
+      ▼
+FluxCD Bootstrap
+      │
+      ▼
+Restore Cluster State
+      │
+      ▼
+Applications
+Monitoring
+Networking
+Certificates
 ```
 
-Git is the source of truth.
-
----
-
-## 16. Disaster Recovery
-
-To restore this project on a new cluster:
+Restore the platform on a new Kubernetes cluster:
 
 ```bash
-kubectl get nodes
-export GITHUB_TOKEN=<github-personal-access-token>
+export GITHUB_TOKEN="<github-personal-access-token>"
+export GITHUB_USER="<github-username>"
+export GITOPS_REPO="<gitops-repository-name>"
+```
 
+```bash
 flux bootstrap github \
-  --owner=<github-username> \
-  --repository=<gitops-repository-name> \
+  --owner=$GITHUB_USER \
+  --repository=$GITOPS_REPO \
   --branch=main \
   --path=clusters/production \
   --personal=true \
-  --token-auth \
-  --network-policy=false
+  --token-auth
 ```
 
-FluxCD will restore all resources defined under:
-
-```text
-clusters/production
-```
+FluxCD automatically restores all resources defined in Git.
 
 ---
 
-## Maintainer
+## Technology Stack
 
-**Chandan Richard Chiran**
+| Category     | Technologies                     |
+| ------------ | -------------------------------- |
+| GitOps       | FluxCD, Git                      |
+| Platform     | Kubernetes                       |
+| Service Mesh | Istio                            |
+| Certificates | cert-manager                     |
+| Monitoring   | Prometheus                       |
+| Dashboards   | Grafana                          |
+| Logging      | Loki, Promtail                   |
+| CI/CD        | GitHub Actions                   |
+| Registry     | GitHub Container Registry (GHCR) |
 
-GitHub:
+---
 
-```text
-https://github.com/crchiran
-```
+## Learning Outcomes
+
+This project demonstrates:
+
+* GitOps workflows
+* FluxCD operations
+* Kubernetes deployments
+* Istio traffic management
+* TLS certificate automation
+* Monitoring and observability
+* Centralized logging
+* Declarative infrastructure
+* Disaster recovery through Git
+* Production-inspired platform operations
+
+---
+
+## Future Enhancements
+
+Potential future improvements:
+
+* Multi-environment GitOps
+* Progressive delivery
+* Canary deployments
+* OpenTelemetry tracing
+* Service Level Objectives (SLOs)
+* Policy enforcement with Kyverno
+* Runtime security with Falco
+* Multi-cluster management
+* Automated backup and recovery workflows
+
+---
+
+## License
+
+This project is provided for educational and demonstration purposes.
